@@ -1,0 +1,23 @@
+﻿<Properties StartupConfiguration="{6E99DBF3-F0ED-4FE8-9F0A-137FEAC8D0F9}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AzFunctions/AzFunctions.cs">
+    <Files>
+      <File FileName="AzFunctions/AzFunctions.cs" Line="28" Column="25" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AzFunctionsApp" expanded="True">
+            <Node name="AzFunctions" expanded="True" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.AzFunctions PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
