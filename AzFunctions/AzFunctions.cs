@@ -2,7 +2,6 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
@@ -19,30 +18,32 @@ namespace AzFunctions
                 .AddJsonFile("local.settings.json", true, true).AddEnvironmentVariables().Build();
 
             BlobContainerClient blobContainerClient = new BlobContainerClient("DefaultEndpointsProtocol=https;AccountName=straccblobaz19;AccountKey=juvesmS3YfsaJJCjZmE4215mhWig9UAfiqJlh0/8JLHn5Ixm1idOdL/aNnrFnIM12+/K1PLeVzax+AStziRQPw==;EndpointSuffix=core.windows.net", "images");
-
             Azure.Pageable<BlobItem> blobs = blobContainerClient.GetBlobs();
-            int count = 0, deletions = 0;
+            int count = 0;
 
             foreach(BlobItem blob in blobs)
             {
                 count++;
             }
 
-            if(count > 10)
+            DateTimeOffset dateFuture = new DateTimeOffset(2100, 12, 12, 8, 20, 10, new TimeSpan(-5, 0, 0));
+            BlobItem blobToBeDeleted = null;
+            foreach (BlobItem blobItem in blobs)
             {
-                deletions = count - 10;
-            }
-            //log.LogInformation(blobContainerClient.GetType().ToString());
-            if(deletions > 0)
-            {
-                foreach (BlobItem blobItem in blobs)
+                DateTimeOffset dateNow = (DateTimeOffset)blobItem.Properties.LastModified;
+                var newTime = DateTimeOffset.Compare(dateNow, dateFuture);
+                if(newTime < 0)
                 {
-                    blobContainerClient.DeleteBlobIfExists(blobItem.Name);
-                    log.LogInformation($"Blob Name {blobItem.Name} is deleted successfully.");
-                    break;
+                    blobToBeDeleted = blobItem;
+                    dateFuture = dateNow;
                 }
             }
-            
+
+            if(count > 10)
+            {
+                blobContainerClient.DeleteBlobIfExists(blobToBeDeleted.Name);
+                log.LogInformation($"Blob Name {blobToBeDeleted.Name} is deleted successfully.");
+            }
         }
     }
 
